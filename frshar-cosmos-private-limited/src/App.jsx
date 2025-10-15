@@ -22,7 +22,7 @@ function NavItem({ href, label, interactive = true }) {
 function Header() {
   return (
     <header className="border-b border-white/10 bg-black sticky top-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+      <div className="mx-auto max-w-[1200px] px-2 sm:px-3 lg:px-4 h-16 flex items-center">
         
         <div className="flex-1" />
         <nav className="hidden md:flex items-center gap-10 text-sm justify-center">
@@ -44,7 +44,7 @@ function Header() {
 
 function Breadcrumbs() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 text-xs text-white/60">
+    <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-2 text-xs text-white/60">
       Home / Services / Data Protection
     </div>
   )
@@ -53,7 +53,7 @@ function Breadcrumbs() {
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-4">
         <img src="/images/hero.jpg" alt="Top banner" className="w-full rounded-md ring-1 ring-white/10" />
       </div>
     </section>
@@ -63,7 +63,7 @@ function Hero() {
 function Section({ id, title, children, kicker }) {
   return (
     <section id={id} className="border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
         {kicker && (
           <p className="text-xs uppercase tracking-widest text-lime-400/80">{kicker}</p>
         )}
@@ -96,14 +96,34 @@ function Responsibilities() {
 function TabsBar() {
   const tabs = ['Overview', 'Features', 'Models', 'FAQs']
   return (
-    <div className="border-t border-b border-white/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 overflow-x-auto">
-        <div className="flex gap-8 text-sm">
-          {tabs.map((t, i) => (
-            <button key={t} className={`py-4 ${i === 0 ? 'text-white border-b-2 border-lime-400' : 'text-white/70 hover:text-white'}`}>{t}</button>
-          ))}
+    <div className="bg-black">
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4">
+        <div className="grid grid-cols-[auto,1fr,auto] items-center">
+          <div className="py-3 text-[11px] text-white/70">Asif Firewall Data Protection</div>
+          <div className="py-1 flex items-center  gap-8 text-sm whitespace-nowrap">
+            {tabs.map((t, i) => (
+              <button key={t} className={`relative py-3 ${i === 0 ? 'text-sky-400' : 'text-white/70 hover:text-white'}`}>
+                {t}
+                {i === 0 && <span className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-[3px] bg-sky-400" />}
+              </button>
+            ))}
+          </div>
+          <div />
         </div>
       </div>
+    </div>
+  )
+}
+
+function IntroBlurb() {
+  return (
+    <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-10 text-center">
+      <p className="text-white text-lg sm:text-xl leading-relaxed">
+        Asif Firewall Backup provides businesses with a flexible, reliable, and cost‑effective solution for data
+        backup and restoration. Deployable as a physical or virtual appliance on‑premises, Asif Firewall Backup
+        serves as a backup target for data from various sources, including servers, virtual machines, databases,
+        and applications.
+      </p>
     </div>
   )
 }
@@ -112,22 +132,22 @@ function FeatureColumns() {
   const items = [
     {
       title: 'Reliable ransomware safeguard, ensuring quick recovery',
-      body: "Don't let criminals hold your data hostage. Eliminate the malware, delete attacker‑encrypted files, and restore a secure copy of your valuable data.",
+      body: "Don't let criminals hold your data hostage. With Asif Firewall, data recovery is straightforward eliminate the malware, delete attacker‑encrypted files, and restore a secure copy of your valuable data.",
     },
     {
       title: 'Affordable and user‑friendly data protection',
-      body: 'Simple to configure and manage with an all‑in‑one solution that provides total peace of mind.',
+      body: 'Simple to configure and manage, Asif Firewall Backup is a secure, all‑in‑one solution that provides total peace of mind. With a capacity‑based, all‑inclusive subscription model, you pay only for the protection you need today avoiding large upfront hardware costs all essentials included.',
     },
     {
       title: 'Flexible on‑premises and cloud replication for any environment',
-      body: 'Securely backs up and recovers data across virtual and physical environments.',
+      body: 'With cloud‑based subscriptions, Asif Firewall Backup securely backs up and recovers data across virtual and physical environments.',
     },
   ]
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((it) => (
-        <div key={it.title} className="rounded-xl bg-neutral-900/60 p-6 ring-1 ring-white/10">
-          <h3 className="text-xl font-semibold">{it.title}</h3>
+        <div key={it.title} className="rounded-xl bg-neutral-900/70 p-6 ring-1 ring-white/10">
+          <h3 className="text-xl font-semibold text-white">{it.title}</h3>
           <p className="mt-3 text-white/70">{it.body}</p>
         </div>
       ))}
@@ -139,9 +159,9 @@ function DefenseWithImage() {
   return (
     <div className="grid gap-10 lg:grid-cols-2 items-start">
       <div>
-        <h3 className="text-2xl font-bold">Secure Your Data with Advanced Ransomware Defense</h3>
+        <h3 className="text-2xl font-bold text-white">Secure Your Data with Advanced Ransomware Defense</h3>
         <p className="mt-3 text-white/80">Most cybersecurity experts agree that the top priority in ransomware protection is the ability to recover from an attack with a secure backup.</p>
-        <ul className="mt-5 list-disc pl-6 marker:text-lime-400 space-y-2">
+        <ul className="mt-5 list-disc pl-6 marker:text-white space-y-2 leading-7">
           <li>Irreversible Data Backups</li>
           <li>Multi‑Layered Login Protection</li>
           <li>End‑to‑End Data Protection</li>
@@ -151,7 +171,7 @@ function DefenseWithImage() {
       </div>
       <figure className="text-center">
         <img src="/images/ui-1.png" alt="Streamlined Interface for Quick and Simple Data Restoration" className="rounded-md ring-1 ring-white/10 mx-auto" />
-        <figcaption className="mt-2 text-sm text-white/60">Streamlined Interface for Quick and Simple Data Restoration</figcaption>
+        <figcaption className="mt-2 text-sm italic text-white/70">Streamlined Interface for Quick and Simple Data Restoration</figcaption>
       </figure>
     </div>
   )
@@ -162,12 +182,13 @@ function CostEffective() {
     <div className="grid gap-10 lg:grid-cols-2 items-start">
       <figure className="order-last lg:order-first text-center">
         <img src="/images/ui-2.png" alt="Simplified Data Display for Easy Access and Understanding" className="rounded-md ring-1 ring-white/10 mx-auto" />
-        <figcaption className="mt-2 text-sm text-white/60">Simplified Data Display for Easy Access and Understanding</figcaption>
+        <figcaption className="mt-2 text-sm italic text-white/70">Simplified Data Display for Easy Access and Understanding</figcaption>
       </figure>
       <div>
-        <h3 className="text-2xl font-bold">Efficient, Cost‑Effective Data Protection Made Easy</h3>
-        <p className="mt-3 text-white/80">Flexible backup options with no hidden fees. Choose the deployment that works best for your environment:</p>
-        <ul className="mt-5 list-disc pl-6 marker:text-lime-400 space-y-2">
+        <h3 className="text-2xl font-bold text-white">Efficient, Cost‑Effective Data Protection Made Easy</h3>
+        <p className="mt-3 text-white/80">Asif Firewall offers flexible backup options, including physical and virtual solutions, with no hidden fees. Each subscription includes the appliance with local storage, software, and support, along with optional cloud storage, a 4‑year hardware refresh, and our Instant Replacement service.</p>
+        <p className="mt-4 text-white/90">Choose the deployment that works best for your environment:</p>
+        <ul className="mt-4 list-disc pl-6 marker:text-white space-y-2 leading-7">
           <li>Reliable Backup Appliance</li>
           <li>Virtual Backup Solution</li>
         </ul>
@@ -180,9 +201,9 @@ function Replication() {
   return (
     <div className="grid gap-10 lg:grid-cols-2 items-start">
       <div>
-        <h3 className="text-2xl font-bold">Effortless Data Replication in the Cloud or On‑Premises</h3>
+        <h3 className="text-2xl font-bold text-white">Effortless Data Replication in the Cloud or On‑Premises</h3>
         <p className="mt-3 text-white/80">User error, malicious deletion, natural disasters, and cyberattacks can threaten your data. Back up and recover across physical and virtual environments such as:</p>
-        <ul className="mt-5 list-disc pl-6 marker:text-lime-400 space-y-2">
+        <ul className="mt-5 list-disc pl-6 marker:text-white space-y-2 leading-7">
           <li>VMware vSphere and Microsoft Hyper‑V</li>
           <li>Windows, Linux, macOS, Microsoft SQL, and Exchange</li>
           <li>Network‑attached storage</li>
@@ -190,6 +211,7 @@ function Replication() {
       </div>
       <figure className="text-center">
         <img src="/images/ui-3.png" alt="Replication UI" className="rounded-md ring-1 ring-white/10 mx-auto" />
+        <figcaption className="mt-2 text-sm italic text-white/70">Keep Your Most Valuable Data Safe</figcaption>
       </figure>
     </div>
   )
@@ -197,19 +219,19 @@ function Replication() {
 
 function Support24h() {
   return (
-    <div className="grid gap-10 lg:grid-cols-2 items-center">
-      <div className="flex justify-center">
-        <img src="/images/badge-24h.png" alt="24h support" className="h-40 w-40" />
-      </div>
-      <div>
-        <p className="text-sm text-white/60">Keep Your Most Valuable Data Safe</p>
-        <h3 className="mt-2 text-2xl font-bold">Asif Firewall: The Trusted Choice for Cyber Protection</h3>
-        <p className="mt-3 text-white/80">Get uninterrupted, expert support from our in‑house engineers, with no phone trees, around the clock.</p>
-        <ul className="mt-5 list-disc pl-6 marker:text-lime-400 space-y-2">
-          <li>Cloud‑to‑Cloud Backup for Microsoft 365</li>
-          <li>Protects emails, attachments, calendars, contacts, tasks</li>
-          <li>Supports Teams, SharePoint, OneDrive, OneNote, Entra ID</li>
-        </ul>
+    <div>
+      <div className="mt-6 grid gap-10 lg:grid-cols-2 items-center">
+        <figure className="flex flex-col items-center justify-center text-center">
+          <img src="/images/badge-24h.png" alt="24h support" className="h-50 w-50 mx-auto" />
+          <figcaption className="mt-2 p-8 text-sm italic text-white/70">Get uninterrupted, expert support from our in‑house engineers, with no phone trees, around the clock.</figcaption>
+        </figure>
+        <div>
+          <h3 className="text-2xl font-bold text-white">Asif Firewall: The Trusted Choice for Cyber Protection</h3>
+          <p className="mt-3 text-white/80">User error, malicious deletion, natural disasters, and cyberattacks can all threaten your data and, ultimately, your business. Asif Firewall can securely back up and recover data, including files located in both physical and virtual environments, such as:</p>
+          <ul className="mt-5 list-disc pl-6 marker:text-white space-y-2 leading-7">
+            <li>Asif Firewall Cloud‑to‑Cloud Backup. Safeguard your Microsoft 365 environment, including emails, attachments, calendars, contacts, tasks, as well as Teams, SharePoint Online, OneDrive, OneNote, and Entra ID</li>
+          </ul>
+        </div>
       </div>
     </div>
   )
@@ -217,18 +239,25 @@ function Support24h() {
 function RelatedArticles() {
   const articles = [1, 2, 3, 4].map((i) => ({
     id: i,
-    title: ' ',
-    excerpt: ' ',
-    image: `/images/article-${i}.jpg` // placeholder paths; replace once assets are provided
+    title: 'How To Protect Threats From Hackers',
+    excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    image: `/images/article-${i}.jpg`
   }))
   return (
-    <section className="border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <h2 className="text-2xl sm:text-3xl font-bold">Related Articles</h2>
+    <section>
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
+        <h2 className="text-3xl sm:text-4xl font-bold">Related Articles</h2>
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {articles.map((a) => (
-            <article key={a.id} className="rounded-2xl overflow-hidden shadow-lg shadow-black/40 ring-1 ring-white/5">
-              <img src={a.image} alt="" className="h-56 w-full object-cover" />
+            <article key={a.id} className="rounded-2xl bg-gradient-to-b from-white/10 to-white/[0.06] p-3 shadow-lg shadow-black/40 ring-1 ring-white/5">
+              <div className="overflow-hidden rounded-xl ring-1 ring-white/10">
+                <img src={a.image} alt="" className="h-44 w-full object-cover" />
+              </div>
+              <div className="px-2 pb-4 pt-4 text-center">
+                <h3 className="text-lg font-extrabold leading-snug text-white">{a.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{a.excerpt}</p>
+                <a href="#" className="mt-4 inline-flex rounded-md bg-gradient-to-r from-indigo-400 to-sky-400 px-4 py-2 text-xs font-semibold text-white/90 shadow hover:opacity-90 mx-auto">Learn More</a>
+              </div>
             </article>
           ))}
         </div>
@@ -239,18 +268,24 @@ function RelatedArticles() {
 
 function NewsletterSignup() {
   return (
-    <section className="relative border-t border-white/10">
+    <section className="relative">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(600px_circle_at_0%_0%,#0f172a,transparent)]" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 flex flex-col md:flex-row items-center gap-8">
-        <div className="flex-1">
-          <h3 className="text-2xl font-bold">Join Us For Security Insights, Threat Spotlights, And More.</h3>
-          <p className="mt-2 text-white/70">Get the newest insights, research, and news sent directly to you.</p>
-          <form className="mt-6 flex max-w-xl gap-3" onSubmit={(e)=>e.preventDefault()}>
-            <input className="flex-1 rounded-lg bg-black/60 ring-1 ring-white/10 px-4 py-3 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-lime-400" placeholder="example@frsharmail.com" type="email" />
-            <button className="rounded-lg bg-gradient-to-r from-indigo-400 to-violet-400 text-black font-semibold px-5 py-3 shadow">🔔 SUBSCRIBE</button>
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-16 sm:py-20 flex flex-col md:flex-row items-center gap-12">
+        <div className="flex-1 w-full">
+          <h3 className="text-3xl md:text-4xl font-extrabold">Join Us For Security Insights, Threat Spotlights, And More.</h3>
+          <p className="mt-3 text-lg text-white/80">Get the newest insights, research, and news sent directly to you.</p>
+          <form className="mt-8 w-full max-w-2xl" onSubmit={(e)=>e.preventDefault()}>
+            <label className="block text-sm mb-2 text-white/90">Email Address *</label>
+            <div className="flex gap-3">
+              <input className="flex-1 h-12 rounded-xl bg-black/70 ring-1 ring-white/10 px-4 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="example@frsharmail.com" type="email" />
+              <button className="h-12 rounded-xl bg-gradient-to-r from-indigo-400 to-sky-400 text-white font-semibold px-6 shadow inline-flex items-center gap-2">
+                <span>🔔</span>
+                <span>SUBSCRIBE</span>
+              </button>
+            </div>
           </form>
         </div>
-        <div className="w-56 h-56 md:w-64 md:h-64 shrink-0">
+        <div className="w-72 h-72 md:w-80 md:h-80 shrink-0">
           <img src="/images/newsletter-illus.png" alt="Newsletter illustration" className="w-full h-full object-contain" />
         </div>
       </div>
@@ -263,11 +298,14 @@ function ContactCTA() {
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-400/40 to-transparent" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(1000px_600px_at_50%_120%,#5dd0ff,transparent)] opacity-60" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <h2 className="text-3xl sm:text-5xl font-extrabold">Let’s Secure Together<br/>Contact Us for Firewall Solutions</h2>
+      <div className="absolute inset-x-0 bottom-0 h-48 -z-10 bg-gradient-to-b from-transparent to-black/90" />
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-24 text-center">
+        <h2 className="text-4xl sm:text-6xl font-extrabold">Let’s Secure Together<br/>Contact Us for Firewall Solutions</h2>
         <p className="mt-4 text-white/80 max-w-2xl mx-auto">Connect with us to explore how we can secure your digital world. We’re here to help!</p>
         <div className="mt-8">
-          <a href="#contact" className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/90 text-black shadow">→</a>
+          <a href="#contact" className="group inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/90 text-black shadow transition-colors duration-300 hover:bg-sky-400 hover:text-white">
+            <span className="transition-transform duration-300 group-hover:rotate-45">→</span>
+          </a>
         </div>
       </div>
     </section>
@@ -276,16 +314,16 @@ function ContactCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+    <footer className="bg-black">
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
           <div className="md:col-span-2">
             <h4 className="text-xl font-semibold">Company name</h4>
             <p className="mt-4 text-sm text-white/70">Subscribe to Our Newsletter:</p>
             <p className="mt-1 text-xs text-white/50">Receive updates on Asif firewall and special promotions!</p>
             <form className="mt-4 flex max-w-md gap-2" onSubmit={(e)=>e.preventDefault()}>
               <input className="flex-1 rounded-lg bg-black/60 ring-1 ring-white/10 px-3 py-2 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-lime-400" placeholder="Your email here" type="email" />
-              <button className="rounded-lg bg-gradient-to-r from-sky-400 to-indigo-400 text-black font-semibold px-4">Submit</button>
+              <button className="rounded-lg bg-gradient-to-r from-sky-400 to-indigo-400 text-white font-semibold px-4">Submit</button>
             </form>
           </div>
           <div>
@@ -311,12 +349,20 @@ function Footer() {
             <h5 className="font-semibold">Solution</h5>
             <ul className="mt-3 space-y-2 text-sm text-white/70">
               <li>AI in Cybersecurity</li>
-              <li className="mt-4 font-semibold text-white">Support</li>
-              <li className="text-white/70">Get Help</li>
-              <li className="mt-4 font-semibold text-white">About us</li>
-              <li className="text-white/70">Company</li>
-              <li className="text-white/70">Blog</li>
-              <li className="text-white/70">News</li>
+            </ul>
+          </div>
+          <div>
+            <h5 className="font-semibold">Support</h5>
+            <ul className="mt-3 space-y-2 text-sm text-white/70">
+              <li>Get Help</li>
+            </ul>
+          </div>
+          <div>
+            <h5 className="font-semibold">About us</h5>
+            <ul className="mt-3 space-y-2 text-sm text-white/70">
+              <li>Company</li>
+              <li>Blog</li>
+              <li>News</li>
             </ul>
           </div>
         </div>
@@ -343,33 +389,34 @@ export default function App() {
       <Hero />
 
       <TabsBar />
+      <IntroBlurb />
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section>
+        <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <FeatureColumns />
         </div>
       </section>
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section>
+        <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <DefenseWithImage />
         </div>
       </section>
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section>
+        <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <CostEffective />
         </div>
       </section>
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section>
+        <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <Replication />
         </div>
       </section>
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section>
+        <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <Support24h />
         </div>
       </section>
