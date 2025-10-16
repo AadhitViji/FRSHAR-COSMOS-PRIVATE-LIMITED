@@ -21,6 +21,330 @@ function NavItem({ href, label, interactive = true }) {
   )
 }
 
+function LogoMarquee() {
+  const logos = ['aws','gcp','azure','cloudflare','github','gitlab','vercel','netlify']
+  return (
+    <section aria-label="Partners" className="relative py-10 sm:py-12">
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent" />
+      <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4">
+        <div className="marquee marquee-fade" style={{ ['--marquee-speed']: '30s' }}>
+          <div className="marquee-track animate-marquee">
+            {logos.concat(logos, logos).map((name, i) => (
+              <div key={`${name}-${i}`} className="shrink-0 mx-10 opacity-70 hover:opacity-100 transition-opacity">
+                <img src={`/images/${name}.png`} alt={name} className="h-8 sm:h-10 w-auto" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ExperienceTimeline() {
+  const steps = [
+    { title: 'Discovery & Assessment', time: 'Week 1', desc: 'Understand current infra, risks, and goals.' },
+    { title: 'Architecture & Planning', time: 'Week 2', desc: 'Design scalable protection and recovery strategy.' },
+    { title: 'Implementation', time: 'Weeks 3–4', desc: 'Rollout policies, backup targets, and monitoring.' },
+    { title: 'Validation & Training', time: 'Week 5', desc: 'Test restores, tune alerts, train stakeholders.' },
+  ]
+  return (
+    <section aria-label="Experience Timeline" className="relative">
+      <div className="mx-auto max-w-[1200px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
+        <h3 className="text-2xl sm:text-3xl font-extrabold">Our Delivery Timeline</h3>
+        <div className="mt-8 relative">
+          <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-px bg-white/10" />
+          <ul className="space-y-8">
+            {steps.map((s, i) => (
+              <li key={s.title} className="relative pl-12 sm:pl-16">
+                <span className="absolute left-0 sm:left-2 top-1.5 h-3 w-3 rounded-full bg-sky-400 ring-2 ring-black" />
+                <div className="rounded-xl ring-1 ring-white/10 bg-white/5 p-4 sm:p-5">
+                  <div className="text-xs uppercase tracking-widest text-white/60">{s.time}</div>
+                  <div className="mt-1 font-semibold text-white">{s.title}</div>
+                  <p className="mt-1 text-white/70">{s.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TestimonialsCarousel() {
+  const items = [
+    { name: 'Neha', role: 'IT Manager', quote: 'The backup reliability and support are stellar.' },
+    { name: 'Rahul', role: 'SecOps Lead', quote: 'We recovered from a ransomware drill in minutes.' },
+    { name: 'Ananya', role: 'CTO', quote: 'Simple, predictable, and secure—exactly what we needed.' },
+  ]
+  const [idx, setIdx] = useState(0)
+  const [pause, setPause] = useState(false)
+  useEffect(() => {
+    if (pause) return
+    const t = setInterval(() => setIdx((v) => (v + 1) % items.length), 3500)
+    return () => clearInterval(t)
+  }, [pause, items.length])
+  return (
+    <section aria-label="Testimonials" className="relative">
+      <div className="mx-auto max-w-[1000px] px-2 sm:px-3 lg:px-4 py-14 text-center">
+        <h3 className="text-2xl sm:text-3xl font-extrabold">What Customers Say</h3>
+        <div className="mt-8 relative overflow-hidden rounded-2xl ring-1 ring-white/10 bg-white/5"
+             onMouseEnter={() => setPause(true)} onMouseLeave={() => setPause(false)}>
+          <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${idx * 100}%)` }}>
+            {items.map((t) => (
+              <div key={t.name} className="shrink-0 w-full px-6 sm:px-10 py-10">
+                <blockquote className="text-lg sm:text-xl text-white/90">“{t.quote}”</blockquote>
+                <div className="mt-4 text-sm text-white/70">{t.name} • {t.role}</div>
+              </div>
+            ))}
+          </div>
+          <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-2">
+            {items.map((_, i) => (
+              <button key={i} onClick={() => setIdx(i)} aria-label={`Go to slide ${i+1}`}
+                      className={`h-2.5 w-2.5 rounded-full transition-colors ${i === idx ? 'bg-sky-400' : 'bg-white/30 hover:bg-white/60'}`} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SpotlightCursor() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let raf = 0
+    let mx = -9999, my = -9999
+    const onMove = (e) => {
+      mx = e.clientX
+      my = e.clientY
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
+    const onLeave = () => {
+      mx = -9999
+      my = -9999
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
+    const apply = () => {
+      raf = 0
+      el.style.setProperty('--mx', mx + 'px')
+      el.style.setProperty('--my', my + 'px')
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    window.addEventListener('pointerleave', onLeave, { passive: true })
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerleave', onLeave)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+  const style = {
+    background: 'radial-gradient(260px 260px at var(--mx) var(--my), rgba(56,189,248,0.16), rgba(99,102,241,0.10) 40%, transparent 70%)'
+  }
+  return <div ref={ref} className="fixed inset-0 -z-5 pointer-events-none mix-blend-screen" style={style} />
+}
+
+function TiltCard({ children }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let frame = 0
+    let tx = 0, ty = 0
+    const max = 10
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect()
+      const x = (e.clientX - r.left) / r.width
+      const y = (e.clientY - r.top) / r.height
+      tx = (0.5 - x) * max
+      ty = (y - 0.5) * max
+      if (!frame) frame = requestAnimationFrame(apply)
+      // shine
+      el.style.setProperty('--sx', x.toString())
+      el.style.setProperty('--sy', y.toString())
+    }
+    const onLeave = () => {
+      tx = 0; ty = 0
+      if (!frame) frame = requestAnimationFrame(apply)
+    }
+    const apply = () => {
+      frame = 0
+      el.style.transform = `perspective(800px) rotateX(${ty}deg) rotateY(${tx}deg)`
+    }
+    el.addEventListener('pointermove', onMove)
+    el.addEventListener('pointerleave', onLeave)
+    return () => {
+      el.removeEventListener('pointermove', onMove)
+      el.removeEventListener('pointerleave', onLeave)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+  return (
+    <div ref={ref} className="relative will-change-transform transition-transform duration-150">
+      <span className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ background: 'radial-gradient(600px 300px at calc(var(--sx,0.5)*100%) calc(var(--sy,0.5)*100%), rgba(255,255,255,0.18), transparent 40%)' }} />
+      {children}
+    </div>
+  )
+}
+
+function ParticlesCanvas() {
+  const canvasRef = useRef(null)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    if (!canvas || !ctx) return
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1))
+    const resize = () => {
+      const { innerWidth: w, innerHeight: h } = window
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+      canvas.width = Math.floor(w * dpr)
+      canvas.height = Math.floor(h * dpr)
+    }
+    resize()
+    const mouse = { x: 0, y: 0, active: false }
+    const onMove = (e) => {
+      const rect = canvas.getBoundingClientRect()
+      mouse.x = (e.clientX - rect.left) * dpr
+      mouse.y = (e.clientY - rect.top) * dpr
+      mouse.active = true
+    }
+    const onLeave = () => { mouse.active = false }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    window.addEventListener('pointerleave', onLeave, { passive: true })
+
+    let particles = []
+    const targetCount = Math.max(90, Math.min(220, Math.floor((window.innerWidth * window.innerHeight) / 26000)))
+    for (let i = 0; i < targetCount; i++) {
+      const tintPick = Math.random()
+      const tint = tintPick < 0.12 ? (Math.random() < 0.5 ? 'sky' : 'indigo') : 'white'
+      const size = Math.random() * 1.6 + 0.8
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.22 * dpr,
+        vy: (Math.random() - 0.5) * 0.22 * dpr,
+        a: 0.55 + Math.random() * 0.35,
+        r: size * dpr,
+        tint,
+        tw: Math.random() * Math.PI * 2,
+        tws: 0.004 + Math.random() * 0.01,
+      })
+    }
+
+    const connectDist = 120 * dpr
+    const connectDist2 = connectDist * connectDist
+    const mouseDist = 140 * dpr
+    const mouseDist2 = mouseDist * mouseDist
+    let raf = 0
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Physics update
+      for (let p of particles) {
+        // Mild attraction to mouse when active
+        if (mouse.active) {
+          const dx = mouse.x - p.x
+          const dy = mouse.y - p.y
+          const d2 = dx * dx + dy * dy
+          if (d2 < mouseDist2) {
+            const d = Math.sqrt(d2) || 1
+            const f = (mouseDist - d) / mouseDist // 0..1
+            // steer towards mouse slightly
+            p.vx += (dx / d) * 0.02 * f * dpr
+            p.vy += (dy / d) * 0.02 * f * dpr
+          }
+        }
+        // Integrate and softly confine within bounds
+        p.x += p.vx
+        p.y += p.vy
+        if (p.x < 0) { p.x = 0; p.vx *= -1 }
+        if (p.x > canvas.width) { p.x = canvas.width; p.vx *= -1 }
+        if (p.y < 0) { p.y = 0; p.vy *= -1 }
+        if (p.y > canvas.height) { p.y = canvas.height; p.vy *= -1 }
+        // Twinkle
+        p.tw += p.tws
+      }
+
+      // Connections
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j]
+          const dx = p.x - q.x
+          const dy = p.y - q.y
+          const d2 = dx * dx + dy * dy
+          if (d2 <= connectDist2) {
+            const d = Math.sqrt(d2) || 1
+            const t = 1 - d / connectDist
+            const alpha = Math.min(0.6, 0.12 + t * 0.5)
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(q.x, q.y)
+            ctx.strokeStyle = `rgba(148,163,184,${alpha})` // slate-400-ish lines
+            ctx.lineWidth = Math.max(0.5, 1.2 * t) * dpr
+            ctx.stroke()
+          }
+        }
+        // Connection to mouse for stronger interaction
+        if (mouse.active) {
+          const dxm = p.x - mouse.x
+          const dym = p.y - mouse.y
+          const dm2 = dxm * dxm + dym * dym
+          if (dm2 < mouseDist2) {
+            const dm = Math.sqrt(dm2) || 1
+            const t = 1 - dm / mouseDist
+            const alpha = 0.15 + t * 0.35
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.strokeStyle = `rgba(56,189,248,${alpha})` // sky-400
+            ctx.lineWidth = Math.max(0.6, 1.5 * t) * dpr
+            ctx.stroke()
+          }
+        }
+      }
+
+      // Draw particles
+      for (let p of particles) {
+        const alpha = p.a * (0.85 + 0.15 * Math.sin(p.tw))
+        let fill
+        if (p.tint === 'white') fill = `rgba(255,255,255,${alpha})`
+        else if (p.tint === 'sky') fill = `rgba(125,211,252,${alpha})`
+        else fill = `rgba(165,180,252,${alpha})`
+        ctx.beginPath()
+        ctx.fillStyle = fill
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      raf = requestAnimationFrame(draw)
+    }
+    raf = requestAnimationFrame(draw)
+
+    const onResize = () => {
+      resize()
+      // Keep particles within new bounds
+      particles = particles.map((p) => ({ ...p, x: Math.min(Math.max(p.x, 0), canvas.width), y: Math.min(Math.max(p.y, 0), canvas.height) }))
+    }
+    window.addEventListener('resize', onResize)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
+  return (
+    <canvas ref={canvasRef} className="particles-js-canvas-el pointer-events-none fixed inset-0 -z-20" width="593" height="926" style={{ width: '100%', height: '100%' }} />
+  )
+}
+
  
 
 function Reveal({ children, delay = 0 }) {
@@ -205,14 +529,18 @@ function FeatureColumns() {
   return (
     <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((it) => (
-        <div key={it.title} className="group rounded-2xl glass gradient-border p-6 shadow-lg shadow-black/30 transition-transform hover:-translate-y-1 hover-tilt shine">
-          <div className="h-10 w-10 rounded-lg bg-sky-400/20 ring-1 ring-white/10 flex items-center justify-center text-sky-300">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-sky-300">
-              <path d="M12 3l2.4 4.86 5.4.78-3.9 3.8.92 5.36L12 15.9l-4.82 2.54.92-5.36-3.9-3.8 5.4-.78L12 3z" fill="currentColor"/>
-            </svg>
-          </div>
-          <h3 className="mt-4 text-xl font-semibold text-white">{it.title}</h3>
-          <p className="mt-3 text-white/70">{it.body}</p>
+        <div key={it.title} className="group">
+          <TiltCard>
+            <div className="rounded-2xl glass gradient-border p-6 shadow-lg shadow-black/30 transition-transform hover:-translate-y-1">
+              <div className="h-10 w-10 rounded-lg bg-sky-400/20 ring-1 ring-white/10 flex items-center justify-center text-sky-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-sky-300">
+                  <path d="M12 3l2.4 4.86 5.4.78-3.9 3.8.92 5.36L12 15.9l-4.82 2.54.92-5.36-3.9-3.8 5.4-.78L12 3z" fill="currentColor"/>
+                </svg>
+              </div>
+              <h3 className="mt-4 text-xl font-semibold text-white">{it.title}</h3>
+              <p className="mt-3 text-white/70">{it.body}</p>
+            </div>
+          </TiltCard>
         </div>
       ))}
     </div>
@@ -517,12 +845,16 @@ export default function App() {
   return (
     <div className="min-h-dvh">
       <BackgroundFX />
+      <ParticlesCanvas />
+      <SpotlightCursor />
       {/* <Header /> */}
       <Breadcrumbs />
       <Hero />
 
       <TabsBar />
       <IntroBlurb />
+
+      <LogoMarquee />
 
       <div className="divider-x mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4" />
 
@@ -558,6 +890,8 @@ export default function App() {
         </div>
       </section>
 
+      <ExperienceTimeline />
+
       <section>
         <div className="mx-auto max-w-[1500px] px-2 sm:px-3 lg:px-4 py-12 sm:py-16">
           <Reveal delay={200}>
@@ -567,6 +901,7 @@ export default function App() {
       </section>
 
       <RelatedArticles />
+      <TestimonialsCarousel />
       <NewsletterSignup />
       <ContactCTA />
 
