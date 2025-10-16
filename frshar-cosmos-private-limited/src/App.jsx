@@ -517,7 +517,7 @@ export default function App() {
   return (
     <div className="min-h-dvh">
       <BackgroundFX />
-      <Header />
+      {/* <Header /> */}
       <Breadcrumbs />
       <Hero />
 
@@ -570,7 +570,7 @@ export default function App() {
       <NewsletterSignup />
       <ContactCTA />
 
-      <Footer />
+      {/* <Footer /> */}
       <ScrollToTop />
     </div>
   )
